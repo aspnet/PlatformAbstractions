@@ -1,30 +1,30 @@
 {
-  "version": "1.0.0-*",
-  "description": "Abstractions that unify behavior and API across .NET Framework, .NET Core and Mono",
-  "compilationOptions": {
-    "warningsAsErrors": true,
-    "allowUnsafe": true,
-    "keyFile": "../../tools/Key.snk"
-  },
-  "dependencies": { },
-  "frameworks": {
-    "net451": { },
-    "dotnet5.4": {
-      "dependencies": {
-        "System.AppContext": "4.0.1-rc2-23608",
-        "System.Collections": "4.0.11-rc2-23608",
-        "System.ComponentModel": "4.0.1-rc2-23608",
-        "System.IO": "4.0.11-rc2-23608",
-        "System.Linq": "4.0.1-rc2-23608",
-        "System.Reflection": "4.1.0-rc2-23608",
-        "System.Reflection.Extensions": "4.0.1-rc2-23608",
-        "System.Reflection.TypeExtensions": "4.1.0-rc2-23608",
-        "System.Runtime": "4.0.21-rc2-23608",
-        "System.Runtime.Extensions": "4.0.11-rc2-23608",
-        "System.Runtime.InteropServices": "4.0.21-rc2-23608",
-        "System.Runtime.InteropServices.RuntimeInformation": "4.0.0-rc2-23608",
-        "System.Threading.Tasks": "4.0.11-rc2-23608"
-      }
+    "version": "1.0.0-*",
+    "description": "Abstractions that unify behavior and API across .NET Framework, .NET Core and Mono",
+    "compilationOptions": {
+        "warningsAsErrors": true,
+        "allowUnsafe": true,
+        "keyFile": "../../tools/Key.snk"
+    },
+    "dependencies": { },
+    "frameworks": {
+        "net451": {
+        },
+        "dotnet5.4": {
+            "dependencies": {
+                "System.AppContext": "4.0.1-*",
+                "System.IO": "4.0.10-*",
+                "System.IO.FileSystem": "4.0.1-*",
+                "System.Linq": "4.0.1-*",
+                "System.Reflection": "4.1.0-*",
+                "System.Reflection.Extensions": "4.0.1-*",
+                "System.Reflection.TypeExtensions": "4.1.0-*",
+                "System.Resources.ResourceManager": "4.0.1-*",
+                "System.Runtime.Extensions": "4.0.11-*",
+                "System.Runtime.InteropServices": "4.0.21-*",
+                "System.Runtime.InteropServices.RuntimeInformation": "4.0.0-*",
+                "System.Threading.Tasks": "4.0.11-*"
+            }
+        }
     }
-  }
 }

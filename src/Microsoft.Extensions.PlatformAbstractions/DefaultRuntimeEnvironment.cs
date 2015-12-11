@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Microsoft.Extensions.PlatformAbstractions.Native;
 
 namespace Microsoft.Extensions.PlatformAbstractions
 {
@@ -12,14 +13,18 @@ namespace Microsoft.Extensions.PlatformAbstractions
     {
         public DefaultRuntimeEnvironment()
         {
-            OperatingSystem = GetOs();
+            OperatingSystem = PlatformApis.GetOSName();
+            OperatingSystemVersion = PlatformApis.GetOSVersion();
+            OperatingSystemPlatform = PlatformApis.GetOSPlatform();
+
             RuntimePath = GetLocation(typeof(object).GetTypeInfo().Assembly);
             RuntimeType = GetRuntimeType();
             RuntimeVersion = typeof(object).GetTypeInfo().Assembly.GetName().Version.ToString();
             RuntimeArchitecture = GetArch();
         }
 
-        // TODO: implement
+        public Platform OperatingSystemPlatform { get; }
+
         public string OperatingSystemVersion { get; }
 
         public string OperatingSystem { get; }
@@ -47,35 +52,6 @@ namespace Microsoft.Extensions.PlatformAbstractions
             return string.IsNullOrEmpty(assemblyLocation) ? null : Path.GetDirectoryName(assemblyLocation);
         }
 
-        private string GetOs()
-        {
-#if NET451
-            var platform = (int)Environment.OSVersion.Platform;
-            var isWindows = (platform != 4) && (platform != 6) && (platform != 128);
-
-            if (isWindows)
-            {
-                return "Windows";
-            }
-#else
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return "Windows";
-            }
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return "Linux";
-            }
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                return "Darwin";
-            }
-#endif
-            return GetUname();
-        }
-
         private static string GetArch()
         {
 #if NET451
@@ -85,28 +61,5 @@ namespace Microsoft.Extensions.PlatformAbstractions
 #endif
         }
 
-        private unsafe string GetUname()
-        {
-
-            var buffer = new byte[8192];
-            try
-            {
-                fixed (byte* buf = buffer)
-                {
-                    if (uname((IntPtr)buf) == 0)
-                    {
-                        return Marshal.PtrToStringAnsi((IntPtr)buf);
-                    }
-                }
-                return string.Empty;
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
-
-        [DllImport("libc")]
-        static extern int uname(IntPtr buf);
     }
 }

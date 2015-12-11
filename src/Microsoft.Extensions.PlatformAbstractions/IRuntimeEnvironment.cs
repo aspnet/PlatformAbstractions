@@ -19,6 +19,11 @@ namespace Microsoft.Extensions.PlatformAbstractions
         string OperatingSystemVersion { get; }
 
         /// <summary>
+        /// Gets the current operating system platform.
+        /// </summary>
+        Platform OperatingSystemPlatform { get; }
+
+        /// <summary>
         /// Gets the runtime type. Common values include CLR, CoreCLR and Mono.
         /// </summary>
         string RuntimeType { get; }
