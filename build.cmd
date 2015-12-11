@@ -34,6 +34,18 @@ IF "%BUILDCMD_KOREBUILD_VERSION%"=="" (
 )
 :skipgetkorebuild
 
+REM Temporary because we need 'dnu packages add'
+:getdnx
+IF "%BUILDCMD_DNX_VERSION%"=="" (
+    SET BUILDCMD_DNX_VERSION=latest
+)
+IF "%SKIP_DNX_INSTALL%"=="" (
+    CALL packages\KoreBuild-dotnet\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CoreCLR -arch x86 -alias default
+    CALL packages\KoreBuild-dotnet\build\dnvm install default -runtime CLR -arch x86 -alias default
+) ELSE (
+    CALL packages\KoreBuild-dotnet\build\dnvm use default -runtime CLR -arch x86
+)
+
 :getdotnet
 SET DOTNET_INSTALL_DIR=packages
 CALL packages\KoreBuild-dotnet\build\install.cmd
