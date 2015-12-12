@@ -44,7 +44,7 @@ fi
 
 # Temporary because we need 'dnu packages add'
 if ! type dnvm > /dev/null 2>&1; then
-    source packages/KoreBuild/build/dnvm.sh
+    source packages/KoreBuild-dotnet/build/dnvm.sh
 fi
 
 if ! type dnx > /dev/null 2>&1 || [ -z "$SKIP_DNX_INSTALL" ]; then
