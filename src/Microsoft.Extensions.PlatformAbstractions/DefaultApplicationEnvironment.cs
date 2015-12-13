@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
         {
             get
             {
-                return GetEntryAssembly().GetName().Name;
+                return GetEntryAssembly()?.GetName().Name;
             }
         }
 
@@ -30,16 +30,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
         {
             get
             {
-                return GetEntryAssembly().GetName().Version.ToString();
-            }
-        }
-
-        // TODO: Remove this from IApplicationEnvironment
-        public string Configuration
-        {
-            get
-            {
-                return null;
+                return GetEntryAssembly()?.GetName().Version.ToString();
             }
         }
 
@@ -59,23 +50,6 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
                 return string.IsNullOrEmpty(frameworkName) ? null : new FrameworkName(frameworkName);
             }
-        }
-
-        public object GetData(string name)
-        {
-#if NET451
-            return AppDomain.CurrentDomain.GetData(name);
-#else
-            return null;
-#endif
-        }
-
-        public void SetData(string name, object value)
-        {
-#if NET451
-            AppDomain.CurrentDomain.SetData(name, value);
-#else
-#endif
         }
 
         private static Assembly GetEntryAssembly()

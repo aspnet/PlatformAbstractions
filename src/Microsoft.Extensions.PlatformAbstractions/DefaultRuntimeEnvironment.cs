@@ -40,12 +40,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
         private string GetLocation(Assembly assembly)
         {
-            string assemblyLocation = null;
-#if NET451
-            assemblyLocation = assembly.Location;
-#else
-            assemblyLocation = typeof(Assembly).GetRuntimeProperty("Location").GetValue(assembly, index: null) as string;
-#endif
+            string assemblyLocation = assembly.Location;
             return string.IsNullOrEmpty(assemblyLocation) ? null : Path.GetDirectoryName(assemblyLocation);
         }
 
