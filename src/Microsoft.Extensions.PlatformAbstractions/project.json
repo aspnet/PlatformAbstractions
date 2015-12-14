@@ -6,7 +6,7 @@
     "allowUnsafe": true,
     "keyFile": "../../tools/Key.snk"
   },
-  "dependencies": {},
+  "dependencies": { },
   "frameworks": {
     "net451": { },
     "dotnet5.4": {
