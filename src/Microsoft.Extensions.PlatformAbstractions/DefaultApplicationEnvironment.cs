@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.Versioning;
 
@@ -9,33 +10,11 @@ namespace Microsoft.Extensions.PlatformAbstractions
 {
     public class DefaultApplicationEnvironment : IApplicationEnvironment
     {
-        public string ApplicationBasePath
-        {
-            get
-            {
-#if NET451
-                return (string)AppDomain.CurrentDomain.GetData("APP_CONTEXT_BASE_DIRECTORY") ?? AppDomain.CurrentDomain.BaseDirectory;
-#else
-                return AppContext.BaseDirectory;
-#endif
-            }
-        }
+        public string ApplicationBasePath { get; } = GetApplicationBasePath();
 
-        public string ApplicationName
-        {
-            get
-            {
-                return GetEntryAssembly()?.GetName().Name;
-            }
-        }
+        public string ApplicationName { get; } = GetEntryAssembly()?.GetName().Name;
 
-        public string ApplicationVersion
-        {
-            get
-            {
-                return GetEntryAssembly()?.GetName().Version.ToString();
-            }
-        }
+        public string ApplicationVersion { get; } = GetEntryAssembly()?.GetName().Version.ToString();
 
         public FrameworkName RuntimeFramework
         {
@@ -53,6 +32,18 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
                 return string.IsNullOrEmpty(frameworkName) ? null : new FrameworkName(frameworkName);
             }
+        }
+
+        private static string GetApplicationBasePath()
+        {
+            var basePath =
+#if NET451
+                (string)AppDomain.CurrentDomain.GetData("APP_CONTEXT_BASE_DIRECTORY") ??
+                AppDomain.CurrentDomain.BaseDirectory;
+#else
+                AppContext.BaseDirectory;
+#endif
+            return Path.GetFullPath(basePath);
         }
 
         private static Assembly GetEntryAssembly()
