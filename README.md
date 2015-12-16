@@ -1,7 +1,8 @@
 Platform Abstractions
 =======================
+AppVeyor: [![AppVeyor](https://ci.appveyor.com/api/projects/status/m1ax1q33swwyaidm/branch/dev?svg=true)](https://ci.appveyor.com/project/aspnetci/platformabstractions/branch/dev)
 
-Travis: [![Build Status](https://travis-ci.org/aspnet/PlatformAbstractions.svg?branch=release)](https://travis-ci.org/aspnet/PlatformAbstractions)
+Travis: [![Build Status](https://travis-ci.org/aspnet/PlatformAbstractions.svg?branch=dev)](https://travis-ci.org/aspnet/PlatformAbstractions)
 
 Platform abstractions for applications.
 
