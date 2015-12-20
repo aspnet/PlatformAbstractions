@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
                 frameworkName = AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName;
 #endif
                 // Try the target framework attribute
-                frameworkName = frameworkName ?? GetEntryAssembly().GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
+                frameworkName = frameworkName ?? GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
 
                 // TODO: Use when implemented https://github.com/dotnet/corefx/issues/3049
 
