@@ -8,6 +8,10 @@
     "dependencies": {
         "Microsoft.Extensions.PlatformAbstractions": { "target": "project" }
     },
+    
+    "commands": {
+        "QuickTest": "QuickTest"
+    },
 
     "frameworks": {
         "dnx451": { },
