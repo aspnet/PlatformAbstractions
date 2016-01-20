@@ -14,11 +14,5 @@ namespace Microsoft.Extensions.PlatformAbstractions
         public override IApplicationEnvironment Application { get; }
 
         public override IRuntimeEnvironment Runtime { get; }
-
-        public override IAssemblyLoaderContainer AssemblyLoaderContainer { get; }
-
-        public override IAssemblyLoadContextAccessor AssemblyLoadContextAccessor { get; }
-
-        public override ILibraryManager LibraryManager { get; }
     }
 }

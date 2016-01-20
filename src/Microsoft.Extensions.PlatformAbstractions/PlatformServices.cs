@@ -18,13 +18,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
         public abstract IApplicationEnvironment Application { get; }
 
         public abstract IRuntimeEnvironment Runtime { get; }
-
-        public abstract IAssemblyLoaderContainer AssemblyLoaderContainer { get; }
-
-        public abstract IAssemblyLoadContextAccessor AssemblyLoadContextAccessor { get; }
-
-        public abstract ILibraryManager LibraryManager { get; }
-
+        
         public static void SetDefault(PlatformServices defaultPlatformServices)
         {
             _defaultPlatformServices = defaultPlatformServices;
