@@ -9,9 +9,13 @@
         "Microsoft.Extensions.PlatformAbstractions": { "target": "project" },
         "Microsoft.NETCore.Platforms": "1.0.1-*"
     },
+    
+    "commands": {
+        "QuickTest": "QuickTest"
+    },
 
     "frameworks": {
-        "net451": { },
+        "dnx451": { },
         "dnxcore50": {
             "dependencies": {
                 "System.Console": "4.0.0-*"
