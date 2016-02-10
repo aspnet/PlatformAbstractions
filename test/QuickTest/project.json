@@ -1,21 +1,22 @@
-﻿{
-    "version": "1.0.0-*",
-
-    "compilationOptions": {
-        "emitEntryPoint": true
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Microsoft.Extensions.PlatformAbstractions": {
+      "target": "project"
     },
-
-    "dependencies": {
-        "Microsoft.Extensions.PlatformAbstractions": { "target": "project" },
-        "Microsoft.NETCore.Platforms": "1.0.1-*"
+    "Microsoft.NETCore.Platforms": "1.0.1-*"
+  },
+  "frameworks": {
+    "dnxcore50": {
+      "dependencies": {
+        "System.Console": "4.0.0-*",
+        "dotnet-test-xunit": "1.0.0-dev-*"
+      },
+      "imports": "portable-net451+win8"
     },
-
-    "frameworks": {
-        "net451": { },
-        "dnxcore50": {
-            "dependencies": {
-                "System.Console": "4.0.0-*"
-            }
-        }
-    }
+    "net451": {}
+  }
 }
