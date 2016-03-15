@@ -6,4 +6,4 @@ Travis: [![Build Status](https://travis-ci.org/aspnet/PlatformAbstractions.svg?b
 
 Platform abstractions for applications.
 
-This project is part of ASP.NET 5. You can find samples, documentation and getting started instructions for ASP.NET 5 at the [Home](https://github.com/aspnet/home) repo.
+This project is part of ASP.NET Core. You can find samples, documentation and getting started instructions for ASP.NET Core at the [Home](https://github.com/aspnet/home) repo.
