@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using Microsoft.Extensions.PlatformAbstractions.Native;
 
 namespace Microsoft.Extensions.PlatformAbstractions
@@ -48,7 +47,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
         private string GetLocation(Assembly assembly)
         {
-            string assemblyLocation = assembly.Location;
+            var assemblyLocation = (string)typeof(Assembly).GetProperty("Location")?.GetGetMethod().Invoke(assembly, parameters: null);
             return string.IsNullOrEmpty(assemblyLocation) ? null : Path.GetDirectoryName(assemblyLocation);
         }
 

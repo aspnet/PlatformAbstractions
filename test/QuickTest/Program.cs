@@ -14,6 +14,7 @@ namespace QuickTest
                 Console.WriteLine($" Platform : {runtimeEnvironment.OperatingSystemPlatform}");
                 Console.WriteLine($" Version  : {runtimeEnvironment.OperatingSystemVersion}");
                 Console.WriteLine($" RID      : {runtimeEnvironment.GetRuntimeIdentifier()}");
+                Console.WriteLine($" Location : {runtimeEnvironment.RuntimePath}");
                 return 0;
             }
             catch (Exception ex)
