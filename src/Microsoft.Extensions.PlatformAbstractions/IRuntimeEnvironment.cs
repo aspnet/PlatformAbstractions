@@ -37,10 +37,5 @@ namespace Microsoft.Extensions.PlatformAbstractions
         /// Gets the runtime version.
         /// </summary>
         string RuntimeVersion { get; }
-
-        /// <summary>
-        /// Gets the path to the runtime foler.
-        /// </summary>
-        string RuntimePath { get; }
     }
 }
