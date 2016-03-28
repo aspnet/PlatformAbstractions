@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.PlatformAbstractions.Native;
 
@@ -16,7 +15,6 @@ namespace Microsoft.Extensions.PlatformAbstractions
             OperatingSystemVersion = PlatformApis.GetOSVersion();
             OperatingSystemPlatform = PlatformApis.GetOSPlatform();
 
-            RuntimePath = GetLocation(typeof(object).GetTypeInfo().Assembly);
             RuntimeType = GetRuntimeType();
             RuntimeVersion = typeof(object).GetTypeInfo().Assembly.GetName().Version.ToString();
             RuntimeArchitecture = GetArch();
@@ -30,8 +28,6 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
         public string RuntimeArchitecture { get; }
 
-        public string RuntimePath { get; }
-
         public string RuntimeType { get; }
 
         public string RuntimeVersion { get; }
@@ -43,12 +39,6 @@ namespace Microsoft.Extensions.PlatformAbstractions
 #else
             return "CoreCLR";
 #endif
-        }
-
-        private string GetLocation(Assembly assembly)
-        {
-            var assemblyLocation = (string)typeof(Assembly).GetProperty("Location")?.GetGetMethod().Invoke(assembly, parameters: null);
-            return string.IsNullOrEmpty(assemblyLocation) ? null : Path.GetDirectoryName(assemblyLocation);
         }
 
         private static string GetArch()
