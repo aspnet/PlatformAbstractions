@@ -11,11 +11,7 @@
     "netstandardapp1.5": {
       "dependencies": {
         "System.Console": "4.0.0-*"
-      },
-      "imports": [
-        "dnxcore50",
-        "portable-net451+win8"
-      ]
+      }
     },
     "net451": {}
   }
