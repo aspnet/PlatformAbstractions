@@ -3,18 +3,25 @@
 
 namespace Microsoft.Extensions.PlatformAbstractions
 {
-    public class PlatformServices
+    public abstract class PlatformServices
     {
-        private PlatformServices()
+        private static PlatformServices _defaultPlatformServices = new DefaultPlatformServices();
+
+        public static PlatformServices Default
         {
-            Application = new ApplicationEnvironment();
-            Runtime = new RuntimeEnvironment();
+            get
+            {
+                return _defaultPlatformServices;
+            }
         }
 
-        public static PlatformServices Default { get; } = new PlatformServices();
+        public abstract IApplicationEnvironment Application { get; }
 
-        public ApplicationEnvironment Application { get; }
-
-        public RuntimeEnvironment Runtime { get; }
+        public abstract IRuntimeEnvironment Runtime { get; }
+        
+        public static void SetDefault(PlatformServices defaultPlatformServices)
+        {
+            _defaultPlatformServices = defaultPlatformServices;
+        }
     }
 }

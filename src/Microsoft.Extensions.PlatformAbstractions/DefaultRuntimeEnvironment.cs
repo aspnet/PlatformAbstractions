@@ -7,9 +7,9 @@ using Microsoft.Extensions.PlatformAbstractions.Native;
 
 namespace Microsoft.Extensions.PlatformAbstractions
 {
-    public class RuntimeEnvironment
+    public class DefaultRuntimeEnvironment : IRuntimeEnvironment
     {
-        public RuntimeEnvironment()
+        public DefaultRuntimeEnvironment()
         {
             OperatingSystem = PlatformApis.GetOSName();
             OperatingSystemVersion = PlatformApis.GetOSVersion();
