@@ -8,7 +8,7 @@ using System.Runtime.Versioning;
 
 namespace Microsoft.Extensions.PlatformAbstractions
 {
-    public class DefaultApplicationEnvironment : IApplicationEnvironment
+    public class ApplicationEnvironment
     {
         public string ApplicationBasePath { get; } = GetApplicationBasePath();
 
