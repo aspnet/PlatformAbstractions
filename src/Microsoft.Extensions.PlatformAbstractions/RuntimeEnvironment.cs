@@ -3,7 +3,7 @@
 
 using System;
 using System.Reflection;
-using Microsoft.Extensions.PlatformAbstractions.Native;
+using Microsoft.Extensions.PlatformAbstractions.Internal;
 
 namespace Microsoft.Extensions.PlatformAbstractions
 {
@@ -17,20 +17,20 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
             RuntimeType = GetRuntimeType();
             RuntimeVersion = typeof(object).GetTypeInfo().Assembly.GetName().Version.ToString();
-            RuntimeArchitecture = GetArch();
+            RuntimeArchitecture = PlatformApis.GetArch();
         }
 
-        public Platform OperatingSystemPlatform { get; }
+        public Platform OperatingSystemPlatform { get; protected set; }
 
-        public string OperatingSystemVersion { get; }
+        public string OperatingSystemVersion { get; protected set; }
 
-        public string OperatingSystem { get; }
+        public string OperatingSystem { get; protected set; }
 
-        public string RuntimeArchitecture { get; }
+        public string RuntimeArchitecture { get; protected set; }
 
-        public string RuntimeType { get; }
+        public string RuntimeType { get; protected set; }
 
-        public string RuntimeVersion { get; }
+        public string RuntimeVersion { get; protected set; }
 
         private string GetRuntimeType()
         {
@@ -40,15 +40,5 @@ namespace Microsoft.Extensions.PlatformAbstractions
             return "CoreCLR";
 #endif
         }
-
-        private static string GetArch()
-        {
-#if NET451
-            return Environment.Is64BitProcess ? "x64" : "x86";
-#else
-            return IntPtr.Size == 8 ? "x64" : "x86";
-#endif
-        }
-
     }
 }

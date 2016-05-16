@@ -1,11 +1,13 @@
-{
-  "version": "1.0.0-*",
+﻿{
   "buildOptions": {
-    "emitEntryPoint": true
+    "warningsAsErrors": true
   },
   "dependencies": {
+    "Microsoft.Extensions.PlatformAbstractions": { "target": "project" },
+
+    "dotnet-test-xunit": "1.0.0-*",
     "Microsoft.NETCore.Platforms": "1.0.1-*",
-    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-*"
+    "xunit": "2.1.0"
   },
   "frameworks": {
     "netcoreapp1.0": {
@@ -13,14 +15,20 @@
         "Microsoft.NETCore.App": {
           "version": "1.0.0-*",
           "type": "platform"
-        },
-        "System.Console": "4.0.0-*"
+        }
       },
       "imports": [
         "dnxcore50",
         "portable-net451+win8"
       ]
     },
-    "net451": {}
-  }
+    "net451": {
+      "frameworkAssemblies": {
+      },
+      "dependencies": {
+        "xunit.runner.console": "2.1.0"
+      }
+    }
+  },
+  "testRunner": "xunit"
 }

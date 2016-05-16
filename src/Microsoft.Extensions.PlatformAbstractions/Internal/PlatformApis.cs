@@ -2,18 +2,23 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.Extensions.PlatformAbstractions.Native
+namespace Microsoft.Extensions.PlatformAbstractions.Internal
 {
-    internal static class PlatformApis
+    public static class PlatformApis
     {
-        private class DistroInfo
-        {
-            public string Id;
-            public string VersionId;
-        }
-
         private static readonly Lazy<Platform> _platform = new Lazy<Platform>(DetermineOSPlatform);
         private static readonly Lazy<DistroInfo> _distroInfo = new Lazy<DistroInfo>(LoadDistroInfo);
+
+        public static string GetArch()
+        {
+#if NET451
+            return Environment.Is64BitProcess ? "x64" : "x86";
+#elif NETSTANDARD1_3
+            return RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant();
+#else
+            return IntPtr.Size == 8 ? "x64" : "x86";
+#endif
+        }
 
         public static string GetOSName()
         {
@@ -45,71 +50,49 @@ namespace Microsoft.Extensions.PlatformAbstractions.Native
             }
         }
 
-        private static string GetDarwinVersion()
+        private static string GetDarwinVersion() => ConvertDarwinVersionToOSXVersion(NativeMethods.Darwin.GetKernelRelease());
+
+        public static string ConvertDarwinVersionToOSXVersion(string darwinVersion)
         {
+            // https://en.wikipedia.org/wiki/Darwin_%28operating_system%29
+
             Version version;
-            var kernelRelease = NativeMethods.Darwin.GetKernelRelease();
-            if (!Version.TryParse(kernelRelease, out version) || version.Major < 5)
+            if (!Version.TryParse(darwinVersion, out version))
             {
-                // 10.0 covers all versions prior to Darwin 5
-                // Similarly, if the version is not a valid version number, but we have still detected that it is Darwin, we just assume
+                // If the version is not a valid version number, but we have still detected that it is Darwin, we just assume
                 // it is OS X 10.0
+                return "10.0";
+            }
+            else if(version.Major == 1 && version.Minor == 4 && version.Build == 1)
+            {
+                // 1.4.1 was the first release of 10.1.0
+                // Not terribly relevant since we don't run on that but... meh, you never know, and it's easy to add
+                return "10.1";
+            }
+            else if(version.Major < 5)
+            {
+                // 10.0 covers all versions prior to Darwin 5, except for 1.4.1 (which was 10.1)
                 return "10.0";
             }
             else
             {
                 // Mac OS X 10.1 mapped to Darwin 5.x, and the mapping continues that way
                 // So just subtract 4 from the Darwin version.
-                // https://en.wikipedia.org/wiki/Darwin_%28operating_system%29
                 return $"10.{version.Major - 4}";
             }
         }
 
-        public static Platform GetOSPlatform()
-        {
-            return _platform.Value;
-        }
+        public static Platform GetOSPlatform() => _platform.Value;
 
-        private static string GetDistroId()
-        {
-            return _distroInfo.Value?.Id;
-        }
+        private static string GetDistroId() => _distroInfo.Value?.Id;
 
-        private static string GetDistroVersionId()
-        {
-            return _distroInfo.Value?.VersionId;
-        }
+        private static string GetDistroVersionId() => _distroInfo.Value?.VersionId;
 
         private static DistroInfo LoadDistroInfo()
         {
-            // Sample os-release file:
-            //   NAME="Ubuntu"
-            //   VERSION = "14.04.3 LTS, Trusty Tahr"
-            //   ID = ubuntu
-            //   ID_LIKE = debian
-            //   PRETTY_NAME = "Ubuntu 14.04.3 LTS"
-            //   VERSION_ID = "14.04"
-            //   HOME_URL = "http://www.ubuntu.com/"
-            //   SUPPORT_URL = "http://help.ubuntu.com/"
-            //   BUG_REPORT_URL = "http://bugs.launchpad.net/ubuntu/"
-            // We use ID and VERSION_ID
-
             if (File.Exists("/etc/os-release"))
             {
-                var lines = File.ReadAllLines("/etc/os-release");
-                var result = new DistroInfo();
-                foreach (var line in lines)
-                {
-                    if (line.StartsWith("ID=", StringComparison.Ordinal))
-                    {
-                        result.Id = line.Substring(3).Trim('"', '\'');
-                    }
-                    else if (line.StartsWith("VERSION_ID=", StringComparison.Ordinal))
-                    {
-                        result.VersionId = line.Substring(11).Trim('"', '\'');
-                    }
-                }
-                return result;
+                return DistroInfo.Parse(File.ReadAllText("/etc/os-release"));
             }
             return null;
         }
@@ -164,5 +147,47 @@ namespace Microsoft.Extensions.PlatformAbstractions.Native
             return Platform.Unknown;
         }
 #endif
+
+        public class DistroInfo
+        {
+            public string Id { get; }
+            public string VersionId { get; }
+
+            public DistroInfo(string id, string versionId)
+            {
+                Id = id;
+                VersionId = versionId;
+            }
+
+            public static DistroInfo Parse(string osReleaseFile)
+            {
+                // Sample os-release file:
+                //   NAME="Ubuntu"
+                //   VERSION = "14.04.3 LTS, Trusty Tahr"
+                //   ID = ubuntu
+                //   ID_LIKE = debian
+                //   PRETTY_NAME = "Ubuntu 14.04.3 LTS"
+                //   VERSION_ID = "14.04"
+                //   HOME_URL = "http://www.ubuntu.com/"
+                //   SUPPORT_URL = "http://help.ubuntu.com/"
+                //   BUG_REPORT_URL = "http://bugs.launchpad.net/ubuntu/"
+                // We use ID and VERSION_ID
+
+                string id = null;
+                string versionId = null;
+                foreach (var line in osReleaseFile.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+                {
+                    if (line.StartsWith("ID=", StringComparison.Ordinal))
+                    {
+                        id = line.Substring(3).Trim('"', '\'');
+                    }
+                    else if (line.StartsWith("VERSION_ID=", StringComparison.Ordinal))
+                    {
+                        versionId = line.Substring(11).Trim('"', '\'');
+                    }
+                }
+                return new DistroInfo(id ?? string.Empty, versionId ?? string.Empty);
+            }
+        }
     }
 }
