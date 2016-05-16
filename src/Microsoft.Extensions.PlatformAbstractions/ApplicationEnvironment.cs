@@ -28,8 +28,6 @@ namespace Microsoft.Extensions.PlatformAbstractions
                 // Try the target framework attribute
                 frameworkName = frameworkName ?? GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
 
-                // TODO: Use when implemented https://github.com/dotnet/corefx/issues/3049
-
                 return string.IsNullOrEmpty(frameworkName) ? null : new FrameworkName(frameworkName);
             }
         }

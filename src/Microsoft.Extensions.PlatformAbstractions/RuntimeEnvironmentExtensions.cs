@@ -5,19 +5,17 @@ namespace Microsoft.Extensions.PlatformAbstractions
     public static class RuntimeEnvironmentExtensions
     {
         private static readonly string OverrideEnvironmentVariableName = "DOTNET_RUNTIME_ID";
-        private static readonly string LegacyOverrideEnvironmentVariableName = "DNX_RUNTIME_ID";
 
         public static string GetRuntimeIdentifier(this RuntimeEnvironment self)
         {
             return
                 Environment.GetEnvironmentVariable(OverrideEnvironmentVariableName) ??
-                Environment.GetEnvironmentVariable(LegacyOverrideEnvironmentVariableName) ??
                 (GetRIDOS(self) + GetRIDVersion(self) + GetRIDArch(self));
         }
 
         private static string GetRIDArch(RuntimeEnvironment self)
         {
-            if(!string.IsNullOrEmpty(self.RuntimeArchitecture))
+            if (!string.IsNullOrEmpty(self.RuntimeArchitecture))
             {
                 return $"-{self.RuntimeArchitecture.ToLowerInvariant()}";
             }
@@ -26,6 +24,11 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
         private static string GetRIDVersion(RuntimeEnvironment self)
         {
+            if (string.IsNullOrEmpty(self.OperatingSystemVersion))
+            {
+                return string.Empty;
+            }
+
             // Windows RIDs do not separate OS name and version by "." due to legacy
             // Others do, that's why we have the "." prefix on them below
             switch (self.OperatingSystemPlatform)
@@ -74,7 +77,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
                 case Platform.Windows:
                     return "win";
                 case Platform.Linux:
-                    return self.OperatingSystem.ToLowerInvariant();
+                    return self.OperatingSystem.ToLowerInvariant().Replace(" ", "");
                 case Platform.Darwin:
                     return "osx";
                 default:
