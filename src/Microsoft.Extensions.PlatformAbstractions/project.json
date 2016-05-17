@@ -27,33 +27,6 @@
         "System.Runtime.InteropServices.RuntimeInformation": "4.0.0-*",
         "System.Threading.Tasks": "4.0.11-*"
       }
-    },
-    "netcore50": {
-      "dependencies": {
-        "Microsoft.NETCore.Platforms": {
-          "type": "build",
-          "version": "1.0.1-*"
-        },
-        "System.AppContext": "4.0.0",
-        "System.IO.FileSystem": "4.0.0",
-        "System.Linq": "4.0.0",
-        "System.Resources.ResourceManager": "4.0.0",
-        "System.Reflection": "4.0.10",
-        "System.Reflection.Extensions": "4.0.0",
-        "System.Reflection.TypeExtensions": "4.0.0",
-        "System.Runtime.Extensions": "4.0.10",
-        "System.Runtime.InteropServices": "4.0.20",
-        "System.Threading.Tasks": "4.0.10",
-        "System.Runtime.InteropServices.RuntimeInformation": "4.0.0-beta-*",
-        "System.Runtime.WindowsRuntime": {
-          "type": "build",
-          "version": "4.0.10"
-        },
-        "System.ObjectModel": {
-          "type": "build",
-          "version": "4.0.10"
-        }
-      }
     }
   }
 }
