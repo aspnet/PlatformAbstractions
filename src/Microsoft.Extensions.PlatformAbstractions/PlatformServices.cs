@@ -8,13 +8,10 @@ namespace Microsoft.Extensions.PlatformAbstractions
         private PlatformServices()
         {
             Application = new ApplicationEnvironment();
-            Runtime = new RuntimeEnvironment();
         }
 
         public static PlatformServices Default { get; } = new PlatformServices();
 
         public ApplicationEnvironment Application { get; }
-
-        public RuntimeEnvironment Runtime { get; }
     }
 }
