@@ -3,6 +3,7 @@
   <Import Project="..\.build\common.props" Condition="Exists('..\.build\common.props')" />
 
   <PropertyGroup>
+    <Product>Microsoft .NET Extensions</Product>
     <RepositoryUrl>https://github.com/aspnet/PlatformAbstractions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)Key.snk</AssemblyOriginatorKeyFile>
