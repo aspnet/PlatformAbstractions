@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
     {
         public string ApplicationBasePath { get; } = GetApplicationBasePath();
 
-        public string ApplicationName { get; } = GetEntryAssembly()?.GetName().Name;
+        public string ApplicationName { get; } = GetEntryAssembly()?.GetName().Name ?? GetApplicationDomainName();
 
         public string ApplicationVersion { get; } = GetEntryAssembly()?.GetName().Version.ToString();
 
@@ -56,6 +56,15 @@ namespace Microsoft.Extensions.PlatformAbstractions
                 typeof(Assembly).GetMethod("GetEntryAssembly", BindingFlags.Static | BindingFlags.NonPublic) ??
                 typeof(Assembly).GetMethod("GetEntryAssembly", BindingFlags.Static | BindingFlags.Public);
             return getEntryAssemblyMethod.Invoke(obj: null, parameters: Array.Empty<object>()) as Assembly;
+#endif
+        }
+
+        private static string GetApplicationDomainName()
+        {
+#if NET451
+            return AppDomain.CurrentDomain.SetupInformation.ApplicationName;
+#else
+            return null;
 #endif
         }
     }
