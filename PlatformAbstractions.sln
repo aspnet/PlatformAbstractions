@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0943D1DB-D2DA-4265-AAFD-5187B88C76D7}"
 EndProject
@@ -14,7 +14,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Platfo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F125A0A8-8126-4CC3-B9BD-DB1D9E1C942A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.PlatformAbstractions.Tests", "test\Microsoft.Extensions.PlatformAbstractions.Tests\Microsoft.Extensions.PlatformAbstractions.Tests.csproj", "{0CA77FA2-A071-41C7-843A-7EFF312C86DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.PlatformAbstractions.Tests", "test\Microsoft.Extensions.PlatformAbstractions.Tests\Microsoft.Extensions.PlatformAbstractions.Tests.csproj", "{0CA77FA2-A071-41C7-843A-7EFF312C86DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{444E19CB-CAD3-44A6-824C-690C04054B1E}"
+	ProjectSection(SolutionItems) = preProject
+		build\common.props = build\common.props
+		build\dependencies.props = build\dependencies.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,5 +43,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7BD814F6-722F-416E-9A38-24E69A5B2F09} = {0943D1DB-D2DA-4265-AAFD-5187B88C76D7}
 		{0CA77FA2-A071-41C7-843A-7EFF312C86DD} = {F125A0A8-8126-4CC3-B9BD-DB1D9E1C942A}
+		{444E19CB-CAD3-44A6-824C-690C04054B1E} = {BF3D2443-F06F-4668-90EA-8EB5B014E4D9}
 	EndGlobalSection
 EndGlobal
