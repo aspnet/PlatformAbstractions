@@ -5,13 +5,8 @@ namespace Microsoft.Extensions.PlatformAbstractions
 {
     public class PlatformServices
     {
-        private PlatformServices()
-        {
-            Application = new ApplicationEnvironment();
-        }
-
         public static PlatformServices Default { get; } = new PlatformServices();
 
-        public ApplicationEnvironment Application { get; }
+        public ApplicationEnvironment Application { get; } = new ApplicationEnvironment();
     }
 }
