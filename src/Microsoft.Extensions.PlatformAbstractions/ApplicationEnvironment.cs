@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.PlatformAbstractions
             get
             {
                 string frameworkName = null;
-#if NET451
+#if NET46
                 // Try the setup information
                 frameworkName = AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName;
 #endif
@@ -36,32 +36,28 @@ namespace Microsoft.Extensions.PlatformAbstractions
 
         private static string GetApplicationBasePath()
         {
-            var basePath =
-#if NET451
-                (string)AppDomain.CurrentDomain.GetData("APP_CONTEXT_BASE_DIRECTORY") ??
-                AppDomain.CurrentDomain.BaseDirectory;
-#else
-                AppContext.BaseDirectory;
-#endif
+            var basePath = AppContext.BaseDirectory;
             return Path.GetFullPath(basePath);
         }
 
         private static Assembly GetEntryAssembly()
         {
-#if NET451
+#if NET46
             return Assembly.GetEntryAssembly();
-#else
+#elif NETSTANDARD1_3
             // TODO: Remove private reflection when we get this: https://github.com/dotnet/corefx/issues/4146
             var getEntryAssemblyMethod =
                 typeof(Assembly).GetMethod("GetEntryAssembly", BindingFlags.Static | BindingFlags.NonPublic) ??
                 typeof(Assembly).GetMethod("GetEntryAssembly", BindingFlags.Static | BindingFlags.Public);
             return getEntryAssemblyMethod.Invoke(obj: null, parameters: Array.Empty<object>()) as Assembly;
+#else
+#error Target frameworks need to be updated.
 #endif
         }
 
         private static string GetApplicationDomainName()
         {
-#if NET451
+#if NET46
             return AppDomain.CurrentDomain.SetupInformation.ApplicationName;
 #else
             return null;
