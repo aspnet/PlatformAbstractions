@@ -44,3 +44,4 @@ if test ! -d $buildFolder; then
 fi
 
 $buildFile -r $repoFolder "$@"
+
