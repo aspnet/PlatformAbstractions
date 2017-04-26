@@ -1,9 +1,17 @@
-Platform Abstractions
-=======================
-AppVeyor: [![AppVeyor](https://ci.appveyor.com/api/projects/status/m1ax1q33swwyaidm/branch/dev?svg=true)](https://ci.appveyor.com/project/aspnetci/platformabstractions/branch/dev)
-
-Travis: [![Build Status](https://travis-ci.org/aspnet/PlatformAbstractions.svg?branch=dev)](https://travis-ci.org/aspnet/PlatformAbstractions)
-
-Platform abstractions for applications.
+Platform Abstractions (obsolete)
+================================
 
 This project is part of ASP.NET Core. You can find samples, documentation and getting started instructions for ASP.NET Core at the [Home](https://github.com/aspnet/home) repo.
+
+This component only shipped in ASP.NET Core 1 and has been removed from ASP.NET Core 2 and up.
+
+### Replacing API usage
+
+The information this API provided maps to the following .NET APIs.
+
+Microsoft.Extensions.PlatformAbstractions | Equivalent .NET API
+:-- | :--
+ApplicationEnvironment.ApplicationBasePath | `System.AppContext.BaseDirectory` or `System.AppDomain.CurrentDomain.BaseDirectory`
+ApplicationEnvironment.ApplicationName  | `System.Reflection.Assembly.GetEntryAssembly().GetName().Name` or `System.AppDomain.CurrentDomain.SetupInformation.ApplicationName`
+ApplicationEnvironment.ApplicationVersion  | `System.Reflection.Assembly.GetEntryAssembly().GetName().Version`
+ApplicationEnvironment.RuntimeFramework  |  `System.Reflection.Assembly.GetEntryAssembly().GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName` or `System.AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName`
